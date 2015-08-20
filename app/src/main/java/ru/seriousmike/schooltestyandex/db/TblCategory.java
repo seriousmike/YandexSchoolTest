@@ -7,6 +7,7 @@ import ru.seriousmike.schooltestyandex.data.CategoryItem;
 
 /**
  * Created by SeriousM on 17.08.2015.
+ * Набор методов для работы с таблицей категорий в БД
  */
 public class TblCategory {
 
@@ -16,8 +17,6 @@ public class TblCategory {
 	public static final String FLD_YANDEX_ID = "yandex_id";
 	public static final String FLD_TITLE = "title";
 	public static final String FLD_PARENT_ID = "parent_id";
-
-	public static final String FLD_CHILDREN_COUNT = "children_count";
 
 	public static String getCreateTableQuery() {
 		return "CREATE TABLE "+TABLE_NAME+" (" +
@@ -29,9 +28,7 @@ public class TblCategory {
 	}
 
 	public static ContentValues getCVToInsert(CategoryItem item, long parentId) {
-//	public static ContentValues getCVToInsert(CategoryItem item, long innerId, long parentId) {
 		ContentValues cv = new ContentValues();
-//		cv.put(FLD_ID, innerId);
 		cv.put(FLD_PARENT_ID, parentId);
 		cv.put(FLD_YANDEX_ID, item.id);
 		cv.put(FLD_TITLE, item.title);

@@ -3,7 +3,8 @@ package ru.seriousmike.schooltestyandex.data;
 import java.util.List;
 
 /**
- * Created by SeriousM on 19.08.2015.
+ * Категории с вложенностью
+ * Класс для удобного парсинга Ретрофитом
  */
 public class CategoryItemNested extends CategoryItem {
 

@@ -15,6 +15,7 @@ import ru.seriousmike.schooltestyandex.data.CategoryItemNested;
 
 /**
  * Created by SeriousM on 17.08.2015.
+ * Синглтон для работы с БД
  */
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -46,6 +47,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
 	}
 
+	/**
+	 * олучает список дочерних категорий по айдишнику родителя
+	 * @param parentId - иденитификатор родителя в БД ( 0 - корневой уровень )
+	 * @return список категорий
+	 */
 	public List<CategoryItem> getCategoryByParentId(long parentId) {
 		Cursor c = getReadableDatabase().query( TblCategory.TABLE_NAME, null, TblCategory.FLD_PARENT_ID+"="+parentId, null, null, null, TblCategory.FLD_ID );
 		List<CategoryItem> list = new ArrayList<>();
@@ -61,6 +67,11 @@ public class DbHelper extends SQLiteOpenHelper {
 		return list;
 	}
 
+	/**
+	 * подсчитывает количество детей для списка категорий
+	 * результат будет записан в CategoryItem.childrenCount аждого элемента списка
+	 * @param itemList категории для подсчёта
+	 */
 	public void countChildren(List<CategoryItem> itemList) {
 		if(itemList.size()==0) return;
 
@@ -79,7 +90,7 @@ public class DbHelper extends SQLiteOpenHelper {
 			c.moveToFirst();
 			HashMap<Long, Integer> counts = new HashMap<>();
 			while ( !c.isAfterLast() ) {
-				counts.put( c.getLong(0), c.getInt(1) );
+				counts.put(c.getLong(0), c.getInt(1));
 				c.moveToNext();
 			}
 			for(CategoryItem item : itemList) {
@@ -100,18 +111,15 @@ public class DbHelper extends SQLiteOpenHelper {
 		try {
 			db.beginTransaction();
 			db.delete(TblCategory.TABLE_NAME, null, null);
-			Log.d(TAG, "deleted");
 			insertCategoryItem(db, categoryItems, 0);
-			Log.d(TAG, "inserted");
 			db.setTransactionSuccessful();
-			Log.d(TAG, "transaction successfull");
 		} finally {
 			db.endTransaction();
 		}
 	}
 
 	/**
-	 *
+	 * отправляет Insert-запрос в БД для каждого элемента списка
 	 * @param db - WriteableDatabase
 	 * @param nestedItemList - вложенный список для записи
 	 * @param parentId - айдишник родителя
