@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Тест МШЯД</string>
+
+    <string name="title_activity_main">Тест МШЯД</string>
+
+    <string name="categories">Категории</string>
+
+    <string name="menu_sync">Синхронизировать список</string>
+
+    <!-- статусы состояний -->
+    <string name="status_loading">загрузка&#8230;</string>
+    <string name="status_synchronizing">синхронизация&#8230;</string>
+    <string name="status_sync_failed">ошибка синхронизации</string>
+    <string name="status_connection_failed">не удалось подключиться к yandex</string>
+    <string name="status_data_source_db">загружено из БД</string>
+    <string name="status_data_synchronized">синхронизировано с yandex</string>
+</resources>

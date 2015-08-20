@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="ru.seriousmike.schooltestyandex.MainActivity">
+    <item android:id="@+id/menuSync"
+          android:title="@string/menu_sync"
+          android:orderInCategory="100"
+          android:icon="@drawable/ic_sync_white_36dp"
+          app:showAsAction="always"/>
+</menu>

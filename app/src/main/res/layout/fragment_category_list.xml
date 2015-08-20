@@ -1,0 +1,31 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:background="#fff"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/lvCategories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/emptyView"
+        android:src="@drawable/ya_logo"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:clickable="true"
+        android:background="@color/loading_bg_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+</FrameLayout>
