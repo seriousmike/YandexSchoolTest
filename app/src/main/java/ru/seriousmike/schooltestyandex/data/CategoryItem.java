@@ -1,8 +1,6 @@
 package ru.seriousmike.schooltestyandex.data;
 
 
-import java.util.List;
-
 /**
  * Created by SeriousM on 17.08.2015.
  * Категория https://money.yandex.ru/api/categories-list
@@ -25,7 +23,7 @@ public class CategoryItem {
 
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("{");
 		if(id>0) {
 			stringBuilder.append("\"id\":").append(id).append(",");

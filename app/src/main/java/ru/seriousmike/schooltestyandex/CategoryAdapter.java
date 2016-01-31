@@ -17,9 +17,15 @@ import ru.seriousmike.schooltestyandex.data.CategoryItem;
  */
 public class CategoryAdapter extends BaseAdapter {
 
+	//region ------------------------- Constants and variables
+
 	private static final String TAG = "sm_A_Category";
 
 	private List<CategoryItem> mItems = new ArrayList<>();
+
+	//endregion
+
+	//region ------------------------- Public methods
 
 	public void clear() {
 		mItems.clear();
@@ -46,18 +52,20 @@ public class CategoryAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if(convertView==null) {
-			LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+		if( convertView == null ) {
+			convertView = LayoutInflater.from(parent.getContext())
+					.inflate(android.R.layout.simple_list_item_1, parent, false);
 		}
-		CategoryItem item = getItem(position);
-		TextView textView = (TextView) convertView;
+		final CategoryItem item = getItem(position);
+		final TextView textView = (TextView) convertView;
 		textView.setText(item.title);
-		if( item.childrenCount>0 ) {
+		if( item.childrenCount > 0 ) {
 			textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_chevron_right_grey600_18dp, 0);
 		} else {
 			textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 		}
 		return convertView;
 	}
+
+	//endregion
 }

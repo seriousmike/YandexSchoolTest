@@ -26,8 +26,8 @@ public class CategoryDBLoader extends AsyncTaskLoader<List<CategoryItem>> {
 	@Override
 	public List<CategoryItem> loadInBackground() {
 		Log.d(TAG, "loadInBackGround");
-		DbHelper dbHelper = DbHelper.getInstance(getContext());
-		List<CategoryItem> listLevel = dbHelper.getCategoryByParentId(mParentId);
+		final DbHelper dbHelper = DbHelper.getInstance(getContext());
+		final List<CategoryItem> listLevel = dbHelper.getCategoryByParentId(mParentId);
 		dbHelper.close();
 		return listLevel;
 	}

@@ -28,7 +28,7 @@ public class TblCategory {
 	}
 
 	public static ContentValues getCVToInsert(CategoryItem item, long parentId) {
-		ContentValues cv = new ContentValues();
+		final ContentValues cv = new ContentValues();
 		cv.put(FLD_PARENT_ID, parentId);
 		cv.put(FLD_YANDEX_ID, item.id);
 		cv.put(FLD_TITLE, item.title);

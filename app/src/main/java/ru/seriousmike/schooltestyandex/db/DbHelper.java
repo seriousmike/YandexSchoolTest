@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import ru.seriousmike.schooltestyandex.data.CategoryItemNested;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
+	//region ------------------------------------ Constants and variables
+
 	private static final String TAG = "sm_Db";
 
 	private static final int VERSION = 1;
@@ -26,16 +29,26 @@ public class DbHelper extends SQLiteOpenHelper {
 
 	private static DbHelper sInstance;
 
+	//endregion
+
+
+	//region ------------------------------------ Constructors
+
 	private DbHelper(Context context) {
 		super(context, DB_NAME, null, VERSION);
 	}
 
-	public static synchronized DbHelper getInstance(Context context) {
+	public static synchronized DbHelper getInstance(@NonNull Context context) {
 		if( sInstance == null ) {
 			sInstance = new DbHelper( context.getApplicationContext() );
 		}
 		return sInstance;
 	}
+
+	//endregion
+
+
+	//region ------------------------------------ DB lifecycle
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -44,8 +57,13 @@ public class DbHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+		//TODO: implement upgrade if version changes
 	}
+
+	//endregion
+
+
+	//region ------------------------------------ Data methods
 
 	/**
 	 * олучает список дочерних категорий по айдишнику родителя
@@ -53,8 +71,17 @@ public class DbHelper extends SQLiteOpenHelper {
 	 * @return список категорий
 	 */
 	public List<CategoryItem> getCategoryByParentId(long parentId) {
-		Cursor c = getReadableDatabase().query( TblCategory.TABLE_NAME, null, TblCategory.FLD_PARENT_ID+"="+parentId, null, null, null, TblCategory.FLD_ID );
-		List<CategoryItem> list = new ArrayList<>();
+		final Cursor c = getReadableDatabase().query(
+				TblCategory.TABLE_NAME,
+				null,
+				TblCategory.FLD_PARENT_ID+"="+parentId,
+				null,
+				null,
+				null,
+				TblCategory.FLD_ID
+		);
+
+		final List<CategoryItem> list = new ArrayList<>();
 		if(c.getCount() > 0 ) {
 			c.moveToFirst();
 			while ( !c.isAfterLast() ) {
@@ -72,23 +99,28 @@ public class DbHelper extends SQLiteOpenHelper {
 	 * результат будет записан в CategoryItem.childrenCount аждого элемента списка
 	 * @param itemList категории для подсчёта
 	 */
-	public void countChildren(List<CategoryItem> itemList) {
-		if(itemList.size()==0) return;
+	public void countChildren(@NonNull List<CategoryItem> itemList) {
+		if (itemList.size()==0) {
+			return;
+		}
 
-		StringBuilder sb = new StringBuilder();
-
+		final StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < itemList.size(); i++) {
 			sb.append( itemList.get(i).innerId );
 			if( i < itemList.size()-1 ) {
 				sb.append(",");
 			}
 		}
-		Log.i(TAG, sb.toString());
-		String sql = "SELECT "+TblCategory.FLD_PARENT_ID+", COUNT(*) FROM "+TblCategory.TABLE_NAME+" WHERE "+TblCategory.FLD_PARENT_ID+" IN ("+sb.toString()+") GROUP BY "+TblCategory.FLD_PARENT_ID;
-		Cursor c = getReadableDatabase().rawQuery(sql, null);
-		if(c.getCount()>0) {
+
+		final String sql = "SELECT " + TblCategory.FLD_PARENT_ID + ", COUNT(*) "
+				+ " FROM " + TblCategory.TABLE_NAME
+				+ " WHERE " + TblCategory.FLD_PARENT_ID + " IN (" + sb.toString() + ")"
+				+ " GROUP BY " + TblCategory.FLD_PARENT_ID;
+
+		final Cursor c = getReadableDatabase().rawQuery(sql, null);
+		if (c.getCount()>0) {
 			c.moveToFirst();
-			HashMap<Long, Integer> counts = new HashMap<>();
+			final HashMap<Long, Integer> counts = new HashMap<>();
 			while ( !c.isAfterLast() ) {
 				counts.put(c.getLong(0), c.getInt(1));
 				c.moveToNext();
@@ -101,13 +133,12 @@ public class DbHelper extends SQLiteOpenHelper {
 	}
 
 
-
 	/**
 	 * переписывает список категорий в бд
 	 * @param categoryItems - вложенный список категорий для записи
 	 */
-	public void categoriesReset(List<CategoryItemNested> categoryItems) {
-		SQLiteDatabase db = getWritableDatabase();
+	public void categoriesReset(@NonNull List<CategoryItemNested> categoryItems) {
+		final SQLiteDatabase db = getWritableDatabase();
 		try {
 			db.beginTransaction();
 			db.delete(TblCategory.TABLE_NAME, null, null);
@@ -126,10 +157,12 @@ public class DbHelper extends SQLiteOpenHelper {
 	 */
 	private void insertCategoryItem(SQLiteDatabase db, List<CategoryItemNested> nestedItemList, long parentId) {
 		for(CategoryItemNested item : nestedItemList) {
-			long insertedId = db.insert(TblCategory.TABLE_NAME, null, TblCategory.getCVToInsert(item, parentId));
+			final long insertedId = db.insert(TblCategory.TABLE_NAME, null, TblCategory.getCVToInsert(item, parentId));
 			if(item.subs!=null && item.subs.size() > 0) {
 				insertCategoryItem(db, item.subs, insertedId);
 			}
 		}
 	}
+
+	//endregion
 }

@@ -16,7 +16,7 @@ public class CategoryItemNested extends CategoryItem {
 
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("{");
 		if(id>0) {
 			stringBuilder.append("\"id\":").append(id).append(",");
