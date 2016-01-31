@@ -16,7 +16,7 @@ public class CategoryDBLoader extends AsyncTaskLoader<List<CategoryItem>> {
 
 	private static final String TAG = "sm_L_Category";
 
-	private long mParentId;
+	private final long mParentId;
 
 	public CategoryDBLoader(Context context, long parentId) {
 		super(context);

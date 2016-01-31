@@ -104,7 +104,7 @@ public class CategoryWebLoader extends AsyncTaskLoader<CategoryWebLoader.Answer>
 	//region -------------------------------- Inner classes
 
 	public static class Answer {
-		private boolean mSuccess;
+		private boolean mSuccess = false;
 		private String mMessage;
 		private List<CategoryItem> mList;
 

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +20,6 @@ import ru.seriousmike.schooltestyandex.data.CategoryItemNested;
 public class DbHelper extends SQLiteOpenHelper {
 
 	//region ------------------------------------ Constants and variables
-
-	private static final String TAG = "sm_Db";
 
 	private static final int VERSION = 1;
 	private static final String DB_NAME = "yandex_test_db.sqlite";

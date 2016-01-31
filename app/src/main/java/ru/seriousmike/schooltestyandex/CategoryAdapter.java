@@ -1,6 +1,5 @@
 package ru.seriousmike.schooltestyandex;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +18,7 @@ public class CategoryAdapter extends BaseAdapter {
 
 	//region ------------------------- Constants and variables
 
-	private static final String TAG = "sm_A_Category";
-
-	private List<CategoryItem> mItems = new ArrayList<>();
+	private final List<CategoryItem> mItems = new ArrayList<>();
 
 	//endregion
 

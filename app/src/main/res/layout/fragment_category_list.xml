@@ -11,6 +11,7 @@
     <ImageView
         android:id="@+id/emptyView"
         android:src="@drawable/ya_logo"
+        android:contentDescription="@string/cd_logo"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
